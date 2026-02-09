@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Chocolate Day Surprise</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  height:100vh;
+  background:linear-gradient(135deg,#ff758c,#ff7eb3);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  font-family:'Poppins',sans-serif;
+}
+
+.page{
+  position:absolute;
+  width:100%;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+
+.hidden{display:none;}
+
+/* MAIN HEADING DEFAULT */
+h1{
+  margin-bottom:25px;
+  font-family:'Pacifico',cursive;
+  font-size:42px;
+  color:white;
+  text-shadow:
+    0 0 10px rgba(0,0,0,.35),
+    0 0 18px rgba(255,255,255,.6);
+}
+
+/* FINAL PAGE SPECIAL COLOR */
+#page3 h1{
+  color:#ffd36a;
+  text-shadow:
+    0 0 12px rgba(255,180,80,.9),
+    0 0 25px rgba(255,120,200,.6);
+}
+
+/* BUTTON AREA */
+.buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:15px;
+  justify-content:center;
+}
+
+/* CHOCOLATE BUTTONS */
+.choco-btn{
+  padding:15px 26px;
+  font-size:18px;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  color:white;
+  font-weight:600;
+  transition:.25s;
+  box-shadow:0 8px 15px rgba(0,0,0,.25);
+}
+
+/* Individual Colors */
+.choco-btn:nth-child(1){
+  background:linear-gradient(135deg,#6f2c91,#9b5bd3);
+}
+.choco-btn:nth-child(2){
+  background:linear-gradient(135deg,#d62828,#ff5a5a);
+}
+.choco-btn:nth-child(3){
+  background:linear-gradient(135deg,#fcbf49,#ffd166);
+}
+.choco-btn:nth-child(4){
+  background:linear-gradient(135deg,#1d9bf0,#4fc3ff);
+}
+.choco-btn:nth-child(5){
+  background:linear-gradient(135deg,#ff8c00,#ffc078);
+}
+
+.choco-btn:hover{
+  transform:scale(1.12) rotate(-2deg);
+}
+
+/* YES BUTTON */
+#yesBtn{
+  margin-top:30px;
+  padding:16px 40px;
+  font-size:21px;
+  border:none;
+  border-radius:40px;
+  background:linear-gradient(135deg,#fff0f3,#ffd6de);
+  cursor:pointer;
+  position:relative;
+  box-shadow:0 10px 20px rgba(0,0,0,.25);
+}
+
+/* Floating items */
+.float{
+  position:absolute;
+  font-size:26px;
+  animation:fly 3s linear forwards;
+}
+
+@keyframes fly{
+  0%{transform:translateY(0) scale(1);opacity:1;}
+  100%{transform:translateY(-420px) scale(0.3);opacity:0;}
+}
+
+/* Bubble */
+.bubble{
+  position:absolute;
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.8);
+  animation:bubble 1s forwards;
+}
+
+@keyframes bubble{
+  to{
+    transform:translateY(-90px) scale(1.8);
+    opacity:0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+<div class="page" id="page1">
+  <h1>Hello dear 💝<br>Tumhe kaunsi chocolate pasand hai?</h1>
+
+  <div class="buttons">
+    <button class="choco-btn">Dairy Milk</button>
+    <button class="choco-btn">KitKat</button>
+    <button class="choco-btn">5 Star</button>
+    <button class="choco-btn">Milky Bar</button>
+    <button class="choco-btn">Fuse</button>
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page hidden" id="page2">
+  <h1 id="chosenText"></h1>
+  <button id="yesBtn">Haan hoon 😏</button>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page hidden" id="page3">
+  <h1>Happy Chocolate Day Baby 🍫❤️</h1>
+</div>
+
+<script>
+let chosenChocolate="";
+const page1=document.getElementById("page1");
+const page2=document.getElementById("page2");
+const page3=document.getElementById("page3");
+const chosenText=document.getElementById("chosenText");
+const yesBtn=document.getElementById("yesBtn");
+
+document.querySelectorAll(".choco-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    chosenChocolate=btn.innerText;
+    chocolateRain();
+
+    setTimeout(()=>{
+      page1.classList.add("hidden");
+      page2.classList.remove("hidden");
+
+      chosenText.innerHTML=
+        `Arey tum to meri 
+        <span style="
+          color:red;
+          font-size:56px;
+          text-shadow:
+            0 0 12px rgba(255,190,90,.9),
+            0 0 25px rgba(255,120,200,.6);
+        ">
+          ${chosenChocolate}
+        </span> 
+        hooo 😳❤️`;
+    },1200);
+  });
+});
+
+/* Flying chocolates */
+function chocolateRain(){
+  for(let i=0;i<25;i++){
+    const span=document.createElement("div");
+    span.className="float";
+    span.innerText="🍫";
+    span.style.left=Math.random()*100+"%";
+    span.style.bottom="0";
+    span.style.animationDuration=2+Math.random()*2+"s";
+    document.body.appendChild(span);
+
+    setTimeout(()=>span.remove(),4000);
+  }
+}
+
+/* YES BUTTON LOGIC */
+let tapCount=0;
+
+yesBtn.addEventListener("click",e=>{
+  tapCount++;
+
+  bubbleEffect(e.clientX,e.clientY);
+
+  if(tapCount<=5){
+    moveButton();
+  }
+
+  if(tapCount===6){
+    page2.classList.add("hidden");
+    page3.classList.remove("hidden");
+    finalRain();
+  }
+});
+
+/* Move Button */
+function moveButton(){
+  yesBtn.style.position="absolute";
+  yesBtn.style.left=Math.random()*80+"%";
+  yesBtn.style.top=Math.random()*80+"%";
+}
+
+/* Bubble */
+function bubbleEffect(x,y){
+  const b=document.createElement("div");
+  b.className="bubble";
+  b.style.left=x+"px";
+  b.style.top=y+"px";
+  document.body.appendChild(b);
+  setTimeout(()=>b.remove(),1000);
+}
+
+/* Final Hearts + Chocolates */
+function finalRain(){
+  setInterval(()=>{
+    const el=document.createElement("div");
+    el.className="float";
+    el.innerText=Math.random()>0.5?"❤️":"🍫";
+    el.style.left=Math.random()*100+"%";
+    el.style.bottom="0";
+    el.style.fontSize=22+Math.random()*20+"px";
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),4000);
+  },300);
+}
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
