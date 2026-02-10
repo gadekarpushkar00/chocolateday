@@ -2,275 +2,271 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Chocolate Day Surprise</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<title>Teddy Catch Challenge</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    background: linear-gradient(135deg,#ff9a9e,#fad0c4);
+    font-family: Arial, sans-serif;
 }
 
-body{
-  height:100vh;
-  background:linear-gradient(135deg,#ff758c,#ff7eb3);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-  font-family:'Poppins',sans-serif;
+/* ---------------- GAME SCREEN ---------------- */
+
+#gameScreen {
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
 
-.page{
-  position:absolute;
-  width:100%;
-  height:100%;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
+/* Score */
+#scoreBoard {
+    position: fixed;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 22px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 0 8px rgba(0,0,0,0.4);
+    z-index: 20;
 }
 
-.hidden{display:none;}
-
-/* MAIN HEADING DEFAULT */
-h1{
-  margin-bottom:25px;
-  font-family:'Pacifico',cursive;
-  font-size:42px;
-  color:white;
-  text-shadow:
-    0 0 10px rgba(0,0,0,.35),
-    0 0 18px rgba(255,255,255,.6);
+/* Catcher wrapper */
+#catcherBox {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    text-align: center;
+    z-index: 10;
 }
 
-/* FINAL PAGE SPECIAL COLOR */
-#page3 h1{
-  color:#ffd36a;
-  text-shadow:
-    0 0 12px rgba(255,180,80,.9),
-    0 0 25px rgba(255,120,200,.6);
+#catcherName {
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 6px;
+    text-shadow: 0 0 8px rgba(0,0,0,0.4);
 }
 
-/* BUTTON AREA */
-.buttons{
-  display:flex;
-  flex-wrap:wrap;
-  gap:15px;
-  justify-content:center;
+#catcher {
+    width: 100%;
 }
 
-/* CHOCOLATE BUTTONS */
-.choco-btn{
-  padding:15px 26px;
-  font-size:18px;
-  border:none;
-  border-radius:30px;
-  cursor:pointer;
-  color:white;
-  font-weight:600;
-  transition:.25s;
-  box-shadow:0 8px 15px rgba(0,0,0,.25);
+/* Teddy */
+.teddy {
+    position: absolute;
+    top: -150px;
+    animation: fall linear forwards;
 }
 
-/* Individual Colors */
-.choco-btn:nth-child(1){
-  background:linear-gradient(135deg,#6f2c91,#9b5bd3);
-}
-.choco-btn:nth-child(2){
-  background:linear-gradient(135deg,#d62828,#ff5a5a);
-}
-.choco-btn:nth-child(3){
-  background:linear-gradient(135deg,#fcbf49,#ffd166);
-}
-.choco-btn:nth-child(4){
-  background:linear-gradient(135deg,#1d9bf0,#4fc3ff);
-}
-.choco-btn:nth-child(5){
-  background:linear-gradient(135deg,#ff8c00,#ffc078);
+@keyframes fall {
+    to {
+        top: 110%;
+    }
 }
 
-.choco-btn:hover{
-  transform:scale(1.12) rotate(-2deg);
+/* ---------------- COUNTDOWN ---------------- */
+
+#countdownScreen {
+    display: none;
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    justify-content: center;
+    align-items: center;
+    font-size: 6rem;
+    color: white;
+    font-weight: bold;
+    z-index: 50;
 }
 
-/* YES BUTTON */
-#yesBtn{
-  margin-top:30px;
-  padding:16px 40px;
-  font-size:21px;
-  border:none;
-  border-radius:40px;
-  background:linear-gradient(135deg,#fff0f3,#ffd6de);
-  cursor:pointer;
-  position:relative;
-  box-shadow:0 10px 20px rgba(0,0,0,.25);
+/* ---------------- MESSAGE ---------------- */
+
+#messageScreen {
+    display: none;
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,#ff9a9e,#fad0c4);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
-/* Floating items */
-.float{
-  position:absolute;
-  font-size:26px;
-  animation:fly 3s linear forwards;
+#messageScreen h2 {
+    font-size: 3rem;
+    color: white;
 }
 
-@keyframes fly{
-  0%{transform:translateY(0) scale(1);opacity:1;}
-  100%{transform:translateY(-420px) scale(0.3);opacity:0;}
+/* ---------------- FINAL SCREEN ---------------- */
+
+#happyScreen {
+    display: none;
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,#ff9a9e,#fad0c4);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
-/* Bubble */
-.bubble{
-  position:absolute;
-  width:20px;
-  height:20px;
-  border-radius:50%;
-  background:rgba(255,255,255,0.8);
-  animation:bubble 1s forwards;
+#happyScreen h1 {
+    font-size: 4rem;
+    color: white;
+    text-shadow: 0 0 20px rgba(0,0,0,0.3);
+    animation: pop 1.5s ease forwards;
 }
 
-@keyframes bubble{
-  to{
-    transform:translateY(-90px) scale(1.8);
-    opacity:0;
-  }
+@keyframes pop {
+    from {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<!-- PAGE 1 -->
-<div class="page" id="page1">
-  <h1>Hello dear 💝<br>Tumhe kaunsi chocolate pasand hai?</h1>
+<!-- GAME -->
+<div id="gameScreen">
+    <div id="scoreBoard">Caught: 0 / 5</div>
 
-  <div class="buttons">
-    <button class="choco-btn">Dairy Milk</button>
-    <button class="choco-btn">KitKat</button>
-    <button class="choco-btn">5 Star</button>
-    <button class="choco-btn">Milky Bar</button>
-    <button class="choco-btn">Fuse</button>
-  </div>
+    <div id="catcherBox">
+        <span id="catcherName">My Teddy 💛</span>
+        <img id="catcher"
+        src="https://cdn-icons-png.flaticon.com/512/3082/3082031.png">
+    </div>
 </div>
 
-<!-- PAGE 2 -->
-<div class="page hidden" id="page2">
-  <h1 id="chosenText"></h1>
-  <button id="yesBtn">Haan hoon 😏</button>
+<!-- COUNTDOWN -->
+<div id="countdownScreen">3</div>
+
+<!-- MESSAGE -->
+<div id="messageScreen">
+    <h2>You caught 5 Teddies! 🧸✨</h2>
 </div>
 
-<!-- PAGE 3 -->
-<div class="page hidden" id="page3">
-  <h1>Happy Chocolate Day Baby 🍫❤️</h1>
+<!-- FINAL -->
+<div id="happyScreen">
+    <h1>Happy Teddy Day 🧸💛</h1>
 </div>
 
 <script>
-let chosenChocolate="";
-const page1=document.getElementById("page1");
-const page2=document.getElementById("page2");
-const page3=document.getElementById("page3");
-const chosenText=document.getElementById("chosenText");
-const yesBtn=document.getElementById("yesBtn");
+const teddyImg =
+"https://pngimg.com/uploads/teddy_bear/teddy_bear_PNG11.png";
 
-document.querySelectorAll(".choco-btn").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    chosenChocolate=btn.innerText;
-    chocolateRain();
+const gameScreen = document.getElementById("gameScreen");
+const catcherBox = document.getElementById("catcherBox");
+const scoreBoard = document.getElementById("scoreBoard");
 
-    setTimeout(()=>{
-      page1.classList.add("hidden");
-      page2.classList.remove("hidden");
+const countdownScreen = document.getElementById("countdownScreen");
+const messageScreen = document.getElementById("messageScreen");
+const happyScreen = document.getElementById("happyScreen");
 
-      chosenText.innerHTML=
-        `Arey tum to meri 
-        <span style="
-          color:red;
-          font-size:56px;
-          text-shadow:
-            0 0 12px rgba(255,190,90,.9),
-            0 0 25px rgba(255,120,200,.6);
-        ">
-          ${chosenChocolate}
-        </span> 
-        hooo 😳❤️`;
-    },1200);
-  });
+let caught = 0;
+let gameOver = false;
+let spawnLoop;
+
+/* Move trolley */
+document.addEventListener("mousemove", e => {
+    catcherBox.style.left = e.clientX + "px";
+});
+document.addEventListener("touchmove", e => {
+    catcherBox.style.left = e.touches[0].clientX + "px";
 });
 
-/* Flying chocolates */
-function chocolateRain(){
-  for(let i=0;i<25;i++){
-    const span=document.createElement("div");
-    span.className="float";
-    span.innerText="🍫";
-    span.style.left=Math.random()*100+"%";
-    span.style.bottom="0";
-    span.style.animationDuration=2+Math.random()*2+"s";
-    document.body.appendChild(span);
+/* Spawn teddy */
+function createTeddy() {
+    if (gameOver) return;
 
-    setTimeout(()=>span.remove(),4000);
-  }
+    const teddy = document.createElement("img");
+    teddy.src = teddyImg;
+    teddy.className = "teddy";
+
+    const size = 90 + Math.random() * 80;
+    teddy.style.width = size + "px";
+
+    teddy.style.left = Math.random() * window.innerWidth + "px";
+    teddy.style.animationDuration =
+        3 + Math.random() * 3 + "s";
+
+    gameScreen.appendChild(teddy);
+
+    const checkCollision = setInterval(() => {
+
+        const t = teddy.getBoundingClientRect();
+        const c = catcherBox.getBoundingClientRect();
+
+        if (
+            t.bottom > c.top &&
+            t.left < c.right &&
+            t.right > c.left
+        ) {
+            caught++;
+            scoreBoard.textContent =
+                `Caught: ${caught} / 5`;
+
+            teddy.remove();
+            clearInterval(checkCollision);
+
+            if (caught === 5) finishGame();
+        }
+
+        if (t.top > window.innerHeight) {
+            teddy.remove();
+            clearInterval(checkCollision);
+        }
+
+    }, 20);
 }
 
-/* YES BUTTON LOGIC */
-let tapCount=0;
+/* Start spawning */
+spawnLoop = setInterval(createTeddy, 1000);
 
-yesBtn.addEventListener("click",e=>{
-  tapCount++;
+/* Finish game flow */
+function finishGame() {
+    gameOver = true;
+    clearInterval(spawnLoop);
 
-  bubbleEffect(e.clientX,e.clientY);
+    // remove leftover teddies
+    document.querySelectorAll(".teddy")
+        .forEach(t => t.remove());
 
-  if(tapCount<=5){
-    moveButton();
-  }
+    // show countdown
+    countdownScreen.style.display = "flex";
+    let count = 3;
+    countdownScreen.textContent = count;
 
-  if(tapCount===6){
-    page2.classList.add("hidden");
-    page3.classList.remove("hidden");
-    finalRain();
-  }
-});
+    const timer = setInterval(() => {
+        count--;
+        countdownScreen.textContent = count;
 
-/* Move Button */
-function moveButton(){
-  yesBtn.style.position="absolute";
-  yesBtn.style.left=Math.random()*80+"%";
-  yesBtn.style.top=Math.random()*80+"%";
-}
+        if (count === 0) {
+            clearInterval(timer);
+            countdownScreen.style.display = "none";
 
-/* Bubble */
-function bubbleEffect(x,y){
-  const b=document.createElement("div");
-  b.className="bubble";
-  b.style.left=x+"px";
-  b.style.top=y+"px";
-  document.body.appendChild(b);
-  setTimeout(()=>b.remove(),1000);
-}
+            // show message
+            messageScreen.style.display = "flex";
 
-/* Final Hearts + Chocolates */
-function finalRain(){
-  setInterval(()=>{
-    const el=document.createElement("div");
-    el.className="float";
-    el.innerText=Math.random()>0.5?"❤️":"🍫";
-    el.style.left=Math.random()*100+"%";
-    el.style.bottom="0";
-    el.style.fontSize=22+Math.random()*20+"px";
-    document.body.appendChild(el);
-    setTimeout(()=>el.remove(),4000);
-  },300);
+            setTimeout(() => {
+                messageScreen.style.display = "none";
+                gameScreen.style.display = "none";
+                happyScreen.style.display = "flex";
+            }, 2000);
+        }
+    }, 1000);
 }
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
